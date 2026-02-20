@@ -25,8 +25,7 @@ export default async function handler(req) {
 - 直接点出发问者的思维误区或者业务痛点。
 - 运用行动教育框架剖析，给出具体可落地的 Action Plan。
 - Markdown 排版要清晰，分点回答。`;
-
-        const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+        const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-pro-preview:generateContent?key=${apiKey}`;
 
         // Server-to-Server Fetch to Google Gemini API
         const geminiResponse = await fetch(geminiUrl, {
