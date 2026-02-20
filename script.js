@@ -123,6 +123,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: JSON.stringify({ input })
             });
 
+            // Handle non-JSON responses (e.g. Vercel 504 timeout pages)
+            const contentType = response.headers.get('content-type') || '';
+            if (!contentType.includes('application/json')) {
+                return `<p><strong>服务器错误 (${response.status})：</strong>服务器暂时无法响应，请稍后重试。</p>`;
+            }
+
             const data = await response.json();
 
             if (!response.ok || data.error) {
