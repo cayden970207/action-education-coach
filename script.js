@@ -126,17 +126,17 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await response.json();
 
             if (!response.ok || data.error) {
-                return \`<p><strong>出错了：</strong> \${data.error || 'Server Error'}</p>\`;
+                return `<p><strong>出错了：</strong> ${data.error || 'Server Error'}</p>`;
             }
 
             let reply = data.response;
-            
+
             // Convert simple markdown to html layout
             if (reply) {
-                reply = reply.replace(/\\*\\*(.*?)\\*\\*/g, '<strong>$1</strong>');
-                reply = reply.replace(/\\*(.*?)\\*/g, '<em>$1</em>');
-                reply = reply.replace(/\\n\\n/g, '<br><br>');
-                reply = reply.replace(/\\n/g, '<br>');
+                reply = reply.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                reply = reply.replace(/\*(.*?)\*/g, '<em>$1</em>');
+                reply = reply.replace(/\n\n/g, '<br><br>');
+                reply = reply.replace(/\n/g, '<br>');
             } else {
                 reply = "<p>无返回内容，请重试。</p>";
             }
@@ -144,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return reply;
 
         } catch (err) {
-            return \`<p><strong>网络错误：</strong>无法连接到服务器。请检查网络。(\${err.message})</p>\`;
+            return `<p><strong>网络错误：</strong>无法连接到服务器。请检查网络。(${err.message})</p>`;
         }
     }
 });
