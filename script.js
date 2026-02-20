@@ -6,6 +6,38 @@ document.addEventListener('DOMContentLoaded', () => {
     const welcomeScreen = document.getElementById('welcome-screen');
     const chatMessages = document.getElementById('chat-messages');
 
+    // Modal UI elements
+    const settingsBtn = document.querySelectorAll('.sidebar-action-item')[2]; // 3rd item is settings
+    const settingsModal = document.getElementById('settings-modal');
+    const closeSettingsBtn = document.getElementById('close-settings');
+    const saveSettingsBtn = document.getElementById('save-settings');
+    const apiKeyInput = document.getElementById('api-key-input');
+
+    // Load API Key on start
+    const savedApiKey = localStorage.getItem('gemini_api_key');
+    if (savedApiKey) {
+        apiKeyInput.value = savedApiKey;
+    }
+
+    settingsBtn.addEventListener('click', () => {
+        settingsModal.classList.add('show');
+    });
+
+    closeSettingsBtn.addEventListener('click', () => {
+        settingsModal.classList.remove('show');
+    });
+
+    saveSettingsBtn.addEventListener('click', () => {
+        const key = apiKeyInput.value.trim();
+        if (key) {
+            localStorage.setItem('gemini_api_key', key);
+            settingsModal.classList.remove('show');
+            alert('API Key 保存成功！现在你可以开始真实的对话了。');
+        } else {
+            alert('API Key 不能为空');
+        }
+    });
+
     // Toggle Sidebar
     menuBtn.addEventListener('click', () => {
         sidebar.classList.toggle('collapsed');
@@ -35,13 +67,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Function to fill input from suggestions
-    window.fillInput = function(text) {
+    window.fillInput = function (text) {
         chatInput.value = text;
         sendBtn.removeAttribute('disabled');
         chatInput.focus();
     };
 
-    function sendMessage() {
+    async function sendMessage() {
         const text = chatInput.value.trim();
         if (!text) return;
 
@@ -53,27 +85,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Add user message
         addUserMessage(text);
-        
+
         // Clear input
         chatInput.value = '';
         sendBtn.setAttribute('disabled', 'true');
 
-        // Simulate AI thinking and replying
-        setTimeout(() => {
-            const aiResponse = generateCoachResponse(text);
-            addAiMessage(aiResponse);
-            scrollToBottom();
-        }, 800);
+        // Show a loading text or state
+        addAiMessage('正在结合行动教育理念思考...');
+        scrollToBottom();
+
+        // Call Real AI 
+        const aiResponse = await generateCoachResponse(text);
+
+        // Update the last AI message
+        const lastMessage = chatMessages.lastElementChild.querySelector('.message-bubble');
+        lastMessage.innerHTML = aiResponse;
+        scrollToBottom();
     }
 
     function addUserMessage(text) {
         const row = document.createElement('div');
         row.className = 'message-row user-message';
-        
+
         row.innerHTML = `
             <div class="message-bubble">${escapeHtml(text)}</div>
         `;
-        
+
         chatMessages.appendChild(row);
         scrollToBottom();
     }
@@ -81,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function addAiMessage(text) {
         const row = document.createElement('div');
         row.className = 'message-row ai-message';
-        
+
         // Typing effect logic could go here, for now we inject direct HTML
         row.innerHTML = `
             <div class="ai-icon">
@@ -89,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
             <div class="message-bubble">${text}</div>
         `;
-        
+
         chatMessages.appendChild(row);
     }
 
@@ -107,62 +144,58 @@ document.addEventListener('DOMContentLoaded', () => {
             .replace(/'/g, "&#039;");
     }
 
-    // Mock AI Logic based on Action Education
-    function generateCoachResponse(input) {
-        const keywords = input;
-        
-        if (keywords.includes("利润") || keywords.includes("赢利")) {
-            return `
-                <p><strong>教练洞察：利润是企业的生命线，没有利润一切都是空谈！</strong></p>
-                <br>
-                <p>根据《赢利模式》，你可以从以下几个维度重构你的护城河：</p>
-                <ul style="margin-left: 20px; line-height: 1.8;">
-                    <li><strong>第一名战略</strong>：你们处于行业的什么位置？聚焦核心优势，抛弃不赚钱的业务。</li>
-                    <li><strong>大客户战略</strong>：百分之二十的客户创造百分之八十的利润。你们锁定大客户了吗？</li>
-                    <li><strong>产品差异化</strong>：不要陷入价格战，要创造独特的不可替代的客户价值。</li>
-                </ul>
-                <br>
-                <p><b>行动建议：</b>请马上梳理你公司最赚钱的3个产品，砍掉一直在亏钱的尾部产品！</p>
-            `;
-        } else if (keywords.includes("招人") || keywords.includes("招聘") || keywords.includes("将才") || keywords.includes("人才")) {
-            return `
-                <p><strong>教练洞察：招错一个人，成本是工资的15倍！选对人比培养人更重要。</strong></p>
-                <br>
-                <p>李践老师在《将才》中明确指出，招才选将必须坚持“财散人聚”的核心理念。</p>
-                <ul style="margin-left: 20px; line-height: 1.8;">
-                    <li><strong>绘制人才画像</strong>：你们清楚到底要招什么能力、什么价值观的人吗？</li>
-                    <li><strong>高标准严要求</strong>：宁缺毋滥，不要因为业务急就凑合招人。</li>
-                    <li><strong>绩效与分配机制</strong>：有没有让优秀的人拿到不可思议的薪酬？如果你们只给平庸的工资，只能吸引平庸的员工。</li>
-                </ul>
-                <br>
-                <p><b>行动建议：</b>停止无目的的面试，先花1个小时写清楚你要招聘的高管的《人才标准说明书》！</p>
-            `;
-        } else if (keywords.includes("第一名") || keywords.includes("战略")) {
-            return `
-                <p><strong>战略就是做减法，要么第一，要么唯一！</strong></p>
-                <br>
-                <p>在行动教育的体系里，没有中间地带。要想执行“第一名战略”：</p>
-                <ol style="margin-left: 20px; line-height: 1.8;">
-                    <li>缩小阵地，在你最擅长的某一个细分领域做到极致。</li>
-                    <li>对标本行业的世界第一名，找到差距，全员All in去学习和超越。</li>
-                    <li>一切目标以行业老大为准，不做第二！</li>
-                </ol>
-                <br>
-                <p><b>行动建议：</b>告诉团队，你们今年的唯一核心战场是哪个细分市场？</p>
-            `;
-        } else {
-            return `
-                <p><strong>你好，我是你的行动教育实效教练。</strong></p>
-                <br>
-                <p>企业经营的核心就是“实效增长”。针对你当下的困惑，我建议你重新审视以下三点：</p>
-                <ul style="margin-left: 20px; line-height: 1.8;">
-                    <li><strong>战略是否聚焦？</strong>（有没有做到细分行业第一名）</li>
-                    <li><strong>人才是否匹配？</strong>（选对了将才还是庸才）</li>
-                    <li><strong>机制是否激活？</strong>（分钱机制是否能让核心骨干像老板一样操心）</li>
-                </ul>
-                <br>
-                <p>如果你有更具体的问题，比如利润率低下、高管离职、业绩停滞等，请具体提问，我会用《赢利模式》和《将才》的底层逻辑来为你解答！</p>
-            `;
+    // Call Real Gemini API based on Action Education System Prompt
+    async function generateCoachResponse(input) {
+        const apiKey = localStorage.getItem('gemini_api_key');
+        if (!apiKey) {
+            settingsModal.classList.add('show');
+            return "<p><strong>系统提示：请先在设置中心配置你的 Gemini API Key 以解锁完整的大模型对话功能。</strong></p>";
+        }
+
+        const systemPrompt = `你现在是“行动教育专属企业教练”。你的核心思想基于李践老师的《赢利模式》、《将才》、《校长EMBA》等实效管理理论。你的沟通风格直接、犀利、有洞察力，并且始终以“利润、结果、第一名”为导向。
+核心价值观：
+1. 实效第一：所有建议必须能落地，能带来利润和增长。
+2. 第一名战略：鼓励做减法，聚焦核心业务，做到行业第一。
+3. 将才理念：强调选对人比培养人更重要，重视人才提拔。
+
+回答要求：
+- 直接点出发问者的思维误区或者业务痛点。
+- 运用行动教育框架剖析，给出具体可落地的 Action Plan。
+- Markdown 排版要清晰，分点回答。`;
+
+        try {
+            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    system_instruction: {
+                        parts: [{ text: systemPrompt }]
+                    },
+                    contents: [{
+                        parts: [{ text: input }]
+                    }]
+                })
+            });
+
+            const data = await response.json();
+            if (data.error) {
+                return `<p><strong>API 错误：</strong> ${data.error.message}</p>`;
+            }
+
+            let reply = data.candidates[0].content.parts[0].text;
+
+            // Convert simple markdown to html layout
+            reply = reply.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            reply = reply.replace(/\*(.*?)\*/g, '<em>$1</em>');
+            reply = reply.replace(/\n\n/g, '<br><br>');
+            reply = reply.replace(/\n/g, '<br>');
+
+            return reply;
+
+        } catch (err) {
+            return `<p><strong>网络错误：</strong>无法连接到大语言模型。请检查网络。(${err.message})</p>`;
         }
     }
 });

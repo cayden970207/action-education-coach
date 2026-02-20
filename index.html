@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,8 +11,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Material Symbols for icons -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
+
 <body>
     <div class="app-container">
         <!-- Sidebar -->
@@ -25,7 +28,7 @@
                     <span class="btn-text">新对话</span>
                 </button>
             </div>
-            
+
             <div class="sidebar-middle">
                 <div class="recent-title sidebar-section-title">近期记录</div>
                 <div class="chat-history-list">
@@ -74,7 +77,7 @@
                         <span class="gradient-text">你好，企业家。</span><br>
                         <span class="sub-greeting">今天遇到什么经营难题？</span>
                     </h1>
-                    
+
                     <div class="suggestions-grid">
                         <div class="suggestion-card" onclick="fillInput('我们的利润率太低，如何使用《赢利模式》破局？')">
                             <div class="card-text">我们的利润率太低，如何使用《赢利模式》破局？</div>
@@ -110,7 +113,8 @@
 
             <div class="input-area">
                 <div class="input-container">
-                    <input type="text" class="chat-input" id="chat-input" placeholder="输入你想咨询的经营或管理问题..." autocomplete="off">
+                    <input type="text" class="chat-input" id="chat-input" placeholder="输入你想咨询的经营或管理问题..."
+                        autocomplete="off">
                     <button class="icon-btn attachment-btn">
                         <span class="material-symbols-outlined">add_photo_alternate</span>
                     </button>
@@ -128,6 +132,29 @@
         </main>
     </div>
 
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>设置中心</h2>
+                <button class="icon-btn close-modal-btn" id="close-settings">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="settings-group">
+                    <label for="api-key-input">Gemini API Key</label>
+                    <input type="password" id="api-key-input" placeholder="输入从 Google AI Studio 获取的 API Key">
+                    <p class="settings-hint">保存在本地浏览器中，绝不上传到服务器。</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="primary-btn" id="save-settings">保存验证</button>
+            </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
+
 </html>
