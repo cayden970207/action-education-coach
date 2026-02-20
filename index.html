@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>行动教育教练 - Gemini</title>
+    <link rel="stylesheet" href="index.css">
+    <!-- Google Fonts for modern typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Material Symbols for icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar collapsed" id="sidebar">
+            <div class="sidebar-top">
+                <button class="icon-btn menu-btn" id="menu-btn">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+                <button class="new-chat-btn">
+                    <span class="material-symbols-outlined">add</span>
+                    <span class="btn-text">新对话</span>
+                </button>
+            </div>
+            
+            <div class="sidebar-middle">
+                <div class="recent-title sidebar-section-title">近期记录</div>
+                <div class="chat-history-list">
+                    <div class="history-item">
+                        <span class="material-symbols-outlined">chat_bubble</span>
+                        <span class="history-text">赢利模式探讨</span>
+                    </div>
+                    <div class="history-item">
+                        <span class="material-symbols-outlined">chat_bubble</span>
+                        <span class="history-text">如何招才选将</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-bottom">
+                <div class="sidebar-action-item">
+                    <span class="material-symbols-outlined">help</span>
+                    <span class="action-text">帮助</span>
+                </div>
+                <div class="sidebar-action-item">
+                    <span class="material-symbols-outlined">history</span>
+                    <span class="action-text">活动</span>
+                </div>
+                <div class="sidebar-action-item">
+                    <span class="material-symbols-outlined">settings</span>
+                    <span class="action-text">设置</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-nav">
+                <div class="brand">
+                    <span class="brand-text">行动教育 <span class="gemini-badge">Coach</span></span>
+                    <span class="material-symbols-outlined dropdown-icon">arrow_drop_down</span>
+                </div>
+                <div class="user-profile">
+                    <div class="avatar">李</div>
+                </div>
+            </header>
+
+            <div class="chat-container">
+                <div class="welcome-screen" id="welcome-screen">
+                    <h1 class="greeting">
+                        <span class="gradient-text">你好，企业家。</span><br>
+                        <span class="sub-greeting">今天遇到什么经营难题？</span>
+                    </h1>
+                    
+                    <div class="suggestions-grid">
+                        <div class="suggestion-card" onclick="fillInput('我们的利润率太低，如何使用《赢利模式》破局？')">
+                            <div class="card-text">我们的利润率太低，如何使用《赢利模式》破局？</div>
+                            <div class="card-icon-wrapper">
+                                <span class="material-symbols-outlined">trending_up</span>
+                            </div>
+                        </div>
+                        <div class="suggestion-card" onclick="fillInput('公司现在很难招到高级人才，李践老师的《将才》里有什么方法？')">
+                            <div class="card-text">公司现在很难招到高级人才，李践老师的《将才》里有什么方法？</div>
+                            <div class="card-icon-wrapper">
+                                <span class="material-symbols-outlined">group_add</span>
+                            </div>
+                        </div>
+                        <div class="suggestion-card" onclick="fillInput('如何落地“第一名战略”？')">
+                            <div class="card-text">如何落地“第一名战略”？</div>
+                            <div class="card-icon-wrapper">
+                                <span class="material-symbols-outlined">military_tech</span>
+                            </div>
+                        </div>
+                        <div class="suggestion-card" onclick="fillInput('什么是实效增长？')">
+                            <div class="card-text">什么是实效增长？</div>
+                            <div class="card-icon-wrapper">
+                                <span class="material-symbols-outlined">lightbulb</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chat-messages" id="chat-messages" style="display: none;">
+                    <!-- Messages will be injected here -->
+                </div>
+            </div>
+
+            <div class="input-area">
+                <div class="input-container">
+                    <input type="text" class="chat-input" id="chat-input" placeholder="输入你想咨询的经营或管理问题..." autocomplete="off">
+                    <button class="icon-btn attachment-btn">
+                        <span class="material-symbols-outlined">add_photo_alternate</span>
+                    </button>
+                    <button class="icon-btn mic-btn">
+                        <span class="material-symbols-outlined">mic</span>
+                    </button>
+                    <button class="icon-btn send-btn" id="send-btn" disabled>
+                        <span class="material-symbols-outlined">send</span>
+                    </button>
+                </div>
+                <div class="disclaimer">
+                    行动教育 Coach 可能会提供关于企业管理的建议，请结合您的企业实际情况进行落地，赢利模式与实效第一是我们的核心。
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
