@@ -4,128 +4,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>行动教育·杨静 - 招才选将</title>
+    <title>行动教育 · 杨静 — 招才选将</title>
     <link rel="stylesheet" href="index.css">
-    <!-- Google Fonts for modern typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Material Symbols for icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Serif+SC:wght@400;500;600&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 
 <body>
-    <div class="app-container">
-        <!-- Sidebar -->
-        <aside class="sidebar collapsed" id="sidebar">
-            <div class="sidebar-top">
-                <button class="icon-btn menu-btn" id="menu-btn">
-                    <span class="material-symbols-outlined">menu</span>
-                </button>
-                <button class="new-chat-btn">
+    <div class="app">
+        <!-- Top Nav -->
+        <nav class="nav">
+            <div class="nav-brand">行动教育 <span class="nav-accent">· 杨静</span></div>
+            <div class="nav-actions">
+                <button class="nav-btn" id="new-chat-btn" title="新对话" style="display:none;">
                     <span class="material-symbols-outlined">add</span>
-                    <span class="btn-text">新对话</span>
                 </button>
             </div>
+        </nav>
 
-            <div class="sidebar-middle">
-                <div class="recent-title sidebar-section-title">近期记录</div>
-                <div class="chat-history-list">
-                    <div class="history-item">
-                        <span class="material-symbols-outlined">chat_bubble</span>
-                        <span class="history-text">赢利模式探讨</span>
-                    </div>
-                    <div class="history-item">
-                        <span class="material-symbols-outlined">chat_bubble</span>
-                        <span class="history-text">如何招才选将</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="sidebar-bottom">
-                <div class="sidebar-action-item">
-                    <span class="material-symbols-outlined">help</span>
-                    <span class="action-text">帮助</span>
-                </div>
-                <div class="sidebar-action-item">
-                    <span class="material-symbols-outlined">history</span>
-                    <span class="action-text">活动</span>
-                </div>
-            </div>
-        </aside>
-
-        <!-- Main Content -->
-        <main class="main-content">
-            <header class="top-nav">
-                <div class="brand">
-                    <span class="brand-text">行动教育 <span class="gemini-badge">杨静</span></span>
-                    <span class="material-symbols-outlined dropdown-icon">arrow_drop_down</span>
-                </div>
-                <div class="user-profile">
-                    <div class="avatar">杨</div>
-                </div>
-            </header>
-
-            <div class="chat-container">
-                <div class="welcome-screen" id="welcome-screen">
-                    <h1 class="greeting">
-                        <span class="gradient-text">你好，企业家。</span><br>
-                        <span class="sub-greeting">今天遇到什么人才招聘与面试难题？</span>
-                    </h1>
-
-                    <div class="suggestions-grid">
-                        <div class="suggestion-card" onclick="fillInput('我想对标杨静的招才选将SOP，请直接给我高管面试问卷。')">
-                            <div class="card-text">我想对标杨静的招才选将SOP，请直接给我高管面试问卷。</div>
-                            <div class="card-icon-wrapper">
-                                <span class="material-symbols-outlined">assignment</span>
-                            </div>
-                        </div>
-                        <div class="suggestion-card" onclick="fillInput('公司现在很难招到能够独当一面的高级人才，杨老师有什么方法？')">
-                            <div class="card-text">公司现在很难招到能够独当一面的高级人才，杨老师有什么方法？</div>
-                            <div class="card-icon-wrapper">
-                                <span class="material-symbols-outlined">group_add</span>
-                            </div>
-                        </div>
-                        <div class="suggestion-card" onclick="fillInput('招错一个人的隐性成本到底有多高？')">
-                            <div class="card-text">招错一个人的隐性成本到底有多高？</div>
-                            <div class="card-icon-wrapper">
-                                <span class="material-symbols-outlined">warning</span>
-                            </div>
-                        </div>
-                        <div class="suggestion-card" onclick="fillInput('面试时如何快速判断候选人的真实价值观？')">
-                            <div class="card-text">面试时如何快速判断候选人的真实价值观？</div>
-                            <div class="card-icon-wrapper">
-                                <span class="material-symbols-outlined">psychology</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="chat-messages" id="chat-messages" style="display: none;">
-                    <!-- Messages will be injected here -->
-                </div>
-            </div>
-
-            <div class="input-area">
-                <div class="input-container">
-                    <input type="text" class="chat-input" id="chat-input" placeholder="输入你想咨询的招聘、面试或组织战略问题..."
-                        autocomplete="off">
-                    <button class="icon-btn attachment-btn">
-                        <span class="material-symbols-outlined">add_photo_alternate</span>
-                    </button>
-                    <button class="icon-btn mic-btn">
-                        <span class="material-symbols-outlined">mic</span>
-                    </button>
-                    <button class="icon-btn send-btn" id="send-btn" disabled>
-                        <span class="material-symbols-outlined">send</span>
-                    </button>
-                </div>
-                <div class="disclaimer">
-                    行动教育 杨静 可能会提供关于企业人才招募的建议，请结合您的企业实际情况进行落地，选对人比培养人更重要。
+        <!-- Welcome Screen -->
+        <main class="content" id="welcome-screen">
+            <div class="welcome">
+                <h1 class="welcome-title">你好，企业家</h1>
+                <p class="welcome-sub">关于招才选将，有什么我可以帮你的？</p>
+                <div class="suggestions" id="suggestions">
+                    <button class="pill" data-text="我想对标杨静的招才选将SOP，请直接给我高管面试问卷。">面试SOP</button>
+                    <button class="pill" data-text="公司现在很难招到能够独当一面的高级人才，杨老师有什么方法？">招才方法论</button>
+                    <button class="pill" data-text="招错一个人的隐性成本到底有多高？">招错人成本</button>
+                    <button class="pill" data-text="面试时如何快速判断候选人的真实价值观？">价值观判断</button>
                 </div>
             </div>
         </main>
+
+        <!-- Chat Screen -->
+        <main class="content chat-content" id="chat-screen" style="display:none;">
+            <div class="messages" id="messages"></div>
+        </main>
+
+        <!-- Input Area -->
+        <footer class="input-area">
+            <div class="input-wrap">
+                <textarea class="input" id="chat-input" placeholder="输入你的招聘、面试或组织战略问题..." rows="1"></textarea>
+                <button class="send-btn" id="send-btn" disabled>
+                    <span class="material-symbols-outlined">arrow_upward</span>
+                </button>
+            </div>
+            <p class="disclaimer">杨静老师的建议基于《将才》方法论，请结合企业实际情况落地。</p>
+        </footer>
     </div>
 
     <script src="script.js"></script>
